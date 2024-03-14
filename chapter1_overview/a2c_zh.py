@@ -21,7 +21,8 @@ a2c_data = namedtuple('a2c_data', ['logit', 'action', 'value', 'adv', 'return_',
 a2c_loss = namedtuple('a2c_loss', ['policy_loss', 'value_loss', 'entropy_loss'])
 # namedtuple 是一种数据结构，创建一个“类”，
 
-def a2c_error(data: namedtuple) -> namedtuple:    # data: namedtup(输入data，namedtuple是data的形式，对data没有影响); -> namedtuple 
+def a2c_error(data: namedtuple) -> namedtuple:    # data: namedtup(输入data，namedtuple是data的形式，对data没有影响); 
+                                                    -> namedtuple：输出是 namedtuple 形式
                                                     只是增强可读性，对 def fun(data): 没有影响
     """
     **概述**:
@@ -34,8 +35,8 @@ def a2c_error(data: namedtuple) -> namedtuple:    # data: namedtup(输入data，
     if weight is None:
         weight = torch.ones_like(value)    # 创建一个和value结构一样的tensor形式，但是元素都是 1
     # 根据 logit 构建策略分布，然后得到对应动作的概率的对数值。
-    dist = torch.distributions.categorical.Categorical(logits=logit)
-    logp = dist.log_prob(action)
+    dist = torch.distributions.categorical.Categorical(logits=logit)    # 进行logit归一化，这里的logit只是归一化的参数，输出得结果仍然是0，1，2，3.....
+    logp = dist.log_prob(action)        # 对action进行logit分布选择
     # 策略的损失函数: $$- \frac 1 N \sum_{n=1}^{N} log(\pi(a^n|s^n)) A^{\pi}(s^n, a^n)$$
     policy_loss = -(logp * adv * weight).mean()
     # 值函数的损失函数: $$\frac 1 N \sum_{n=1}^{N} (G_t^n - V(s^n))^2$$
