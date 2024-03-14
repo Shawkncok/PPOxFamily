@@ -22,7 +22,7 @@ a2c_loss = namedtuple('a2c_loss', ['policy_loss', 'value_loss', 'entropy_loss'])
 # namedtuple 是一种数据结构，创建一个“类”，
 
 def a2c_error(data: namedtuple) -> namedtuple:    # data: namedtup(输入data，namedtuple是data的形式，对data没有影响); -> namedtuple 
-                                                    只是增强可读性，对 def fun(): 没有影响
+                                                    只是增强可读性，对 def fun(data): 没有影响
     """
     **概述**:
         Advantage Actor-Critic (A2C) 算法的 PyTorch 版实现。 <link https://arxiv.org/pdf/1602.01783.pdf link>
@@ -32,7 +32,7 @@ def a2c_error(data: namedtuple) -> namedtuple:    # data: namedtup(输入data，
     logit, action, value, adv, return_, weight = data
     # 准备默认的权重（weight）。
     if weight is None:
-        weight = torch.ones_like(value)
+        weight = torch.ones_like(value)    # 创建一个和value结构一样的tensor形式，但是元素都是 1
     # 根据 logit 构建策略分布，然后得到对应动作的概率的对数值。
     dist = torch.distributions.categorical.Categorical(logits=logit)
     logp = dist.log_prob(action)
