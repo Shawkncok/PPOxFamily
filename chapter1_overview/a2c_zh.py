@@ -21,11 +21,13 @@ a2c_data = namedtuple('a2c_data', ['logit', 'action', 'value', 'adv', 'return_',
 a2c_loss = namedtuple('a2c_loss', ['policy_loss', 'value_loss', 'entropy_loss'])
 # namedtuple 是一种数据结构，创建一个“类”，
 
-def a2c_error(data: namedtuple) -> namedtuple:    # data: namedtuple; -> namedtuple 只是增强可读性，对 def fun(): 没影响
+def a2c_error(data: namedtuple) -> namedtuple:    # data: namedtup(输入data，namedtuple是data的形式，对data没有影响); -> namedtuple 
+                                                    只是增强可读性，对 def fun(): 没有影响
     """
     **概述**:
         Advantage Actor-Critic (A2C) 算法的 PyTorch 版实现。 <link https://arxiv.org/pdf/1602.01783.pdf link>
     """
+    输入：namedtuple。输出：namedtuple    
     # 对数据 data 进行解包:  $$<\pi(a|s), a, V(s), A^{\pi}(s, a), G_t, w>$$
     logit, action, value, adv, return_, weight = data
     # 准备默认的权重（weight）。
