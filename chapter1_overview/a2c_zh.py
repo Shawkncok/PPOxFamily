@@ -36,9 +36,9 @@ def a2c_error(data: namedtuple) -> namedtuple:    # data: namedtup(输入data，
         weight = torch.ones_like(value)    # 创建一个和value结构一样的tensor形式，但是元素都是 1
     # 根据 logit 构建策略分布，然后得到对应动作的概率的对数值。
     dist = torch.distributions.categorical.Categorical(logits=logit)    # 进行logit归一化，这里的logit只是归一化的参数，输出得结果仍然是0，1，2，3.....
-    logp = dist.log_prob(action)        # 对action进行logit分布选择
+    logp = dist.log_prob(action)        # 计算action在dist分布下的概率的对数
     # 策略的损失函数: $$- \frac 1 N \sum_{n=1}^{N} log(\pi(a^n|s^n)) A^{\pi}(s^n, a^n)$$
-    policy_loss = -(logp * adv * weight).mean()
+    policy_loss = -(logp * adv * weight).mean()    # .mean() 是用来求平均的
     # 值函数的损失函数: $$\frac 1 N \sum_{n=1}^{N} (G_t^n - V(s^n))^2$$
     value_loss = (F.mse_loss(return_, value, reduction='none') * weight).mean()
     # 熵 bonus：$$\frac 1 N \sum_{n=1}^{N} \sum_{a^n}\pi(a^n|s^n) log(\pi(a^n|s^n))$$
