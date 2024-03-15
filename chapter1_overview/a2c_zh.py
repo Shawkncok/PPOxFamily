@@ -58,7 +58,7 @@ def test_a2c():
     # 设置相关参数：batch size=4, action=32
     B, N = 4, 32
     # 从随机分布中生成测试数据： logit, action, value, adv, return_.
-    logit = torch.randn(B, N).requires_grad_(True)
+    logit = torch.randn(B, N).requires_grad_(True)    # requires_grad 与张量的梯度有关
     action = torch.randint(0, N, size=(B, ))
     value = torch.randn(B).requires_grad_(True)
     adv = torch.rand(B)
