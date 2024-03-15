@@ -40,10 +40,10 @@ def a2c_error(data: namedtuple) -> namedtuple:    # data: namedtup(输入data，
     # 策略的损失函数: $$- \frac 1 N \sum_{n=1}^{N} log(\pi(a^n|s^n)) A^{\pi}(s^n, a^n)$$
     policy_loss = -(logp * adv * weight).mean()    # .mean() 是用来求平均的
     # 值函数的损失函数: $$\frac 1 N \sum_{n=1}^{N} (G_t^n - V(s^n))^2$$
-    value_loss = (F.mse_loss(return_, value, reduction='none') * weight).mean()
+    value_loss = (F.mse_loss(return_, value, reduction='none') * weight).mean()    # F.mse_loss() 计算均方差
     # 熵 bonus：$$\frac 1 N \sum_{n=1}^{N} \sum_{a^n}\pi(a^n|s^n) log(\pi(a^n|s^n))$$
     # 注意：最终的损失函数是 ``policy_loss + value_weight * value_loss - entropy_weight * entropy_loss`` .
-    entropy_loss = (dist.entropy() * weight).mean()
+    entropy_loss = (dist.entropy() * weight).mean()    # 计算概率分布的熵
     # Return the concrete loss items.
     # 返回最终的各项损失函数：包含策略损失，值损失和熵损失。
     return a2c_loss(policy_loss, value_loss, entropy_loss)
