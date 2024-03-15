@@ -22,8 +22,8 @@ a2c_loss = namedtuple('a2c_loss', ['policy_loss', 'value_loss', 'entropy_loss'])
 # namedtuple 是一种数据结构，创建一个“类”，
 
 def a2c_error(data: namedtuple) -> namedtuple:    # data: namedtup(输入data，namedtuple是data的形式，对data没有影响); 
-                                                    -> namedtuple：输出是 namedtuple 形式
-                                                    只是增强可读性，对 def fun(data): 没有影响
+                                                  #   -> namedtuple：输出是 namedtuple 形式
+                                                  #   只是增强可读性，对 def fun(data): 没有影响
     """
     **概述**:
         Advantage Actor-Critic (A2C) 算法的 PyTorch 版实现。 <link https://arxiv.org/pdf/1602.01783.pdf link>
@@ -68,7 +68,8 @@ def test_a2c():
     loss = a2c_error(data)
     # 测试 loss 是否是可微分的，是否能正确产生梯度
     assert logit.grad is None
-    assert value.grad is None
+    assert value.grad is None        # assert 语句用于断言某个条件是真的。如果该条件为真，程序会正常运行，不会有任何影响；
+                                     #   如果条件为假，程序会抛出一个 AssertionError 异常
     total_loss = sum(loss)
     total_loss.backward()
     assert isinstance(logit.grad, torch.Tensor)
