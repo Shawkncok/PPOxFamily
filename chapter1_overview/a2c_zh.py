@@ -28,7 +28,7 @@ def a2c_error(data: namedtuple) -> namedtuple:    # data: namedtup(输入data，
     **概述**:
         Advantage Actor-Critic (A2C) 算法的 PyTorch 版实现。 <link https://arxiv.org/pdf/1602.01783.pdf link>
     """
-    输入：namedtuple。输出：namedtuple    
+    # 输入：namedtuple。输出：namedtuple    
     # 对数据 data 进行解包:  $$<\pi(a|s), a, V(s), A^{\pi}(s, a), G_t, w>$$
     logit, action, value, adv, return_, weight = data
     # 准备默认的权重（weight）。
