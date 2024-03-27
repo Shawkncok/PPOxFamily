@@ -20,6 +20,7 @@ import torch.nn.functional as F
 a2c_data = namedtuple('a2c_data', ['logit', 'action', 'value', 'adv', 'return_', 'weight'])
 a2c_loss = namedtuple('a2c_loss', ['policy_loss', 'value_loss', 'entropy_loss'])
 # namedtuple 是一种数据结构，创建一个“类”，
+# 如a2c_data: 定义一个名为a2c_data的类，有'logit', 'action', 'value', 'adv', 'return_', 'weight' 这些元素
 
 def a2c_error(data: namedtuple) -> namedtuple:    # data: namedtup(输入data，namedtuple是data的形式，对data没有影响); 
                                                   #   -> namedtuple：输出是 namedtuple 形式
